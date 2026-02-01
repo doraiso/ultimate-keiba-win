@@ -143,7 +143,14 @@
                 if (progress > 100) progress = 100;
 
                 pBar.style.width = progress + "%";
-                sText.innerText = statusMessages[Math.floor(Math.random() * statusMessages.length)];
+
+                // 【修正ポイント】進捗率に合わせてメッセージを選択
+                // progress(0-100) を 配列のインデックス(0-4) に変換
+                const messageIndex = Math.min(
+                    Math.floor((progress / 100) * statusMessages.length),
+                    statusMessages.length - 1
+                );
+                sText.innerText = statusMessages[messageIndex];
 
                 if (progress >= 100) {
                     clearInterval(interval);
@@ -153,7 +160,7 @@
                         sText.innerText = "解析完了。これがあなたの運命です。";
                     }, 500);
                 }
-            }, 150);
+            }, 200);
         }
     </script>
 </body>
